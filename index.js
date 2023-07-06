@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const cors = require("cors");
 
 // Morgan
 morgan.token("req-body", function (req) {
@@ -17,6 +18,7 @@ const decideMorgan = function (req, res, next) {
 };
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 app.use(decideMorgan);
 
