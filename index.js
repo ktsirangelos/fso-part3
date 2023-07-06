@@ -1,7 +1,11 @@
 const express = require("express");
 const app = express();
 
+// Middleware
+
 app.use(express.json());
+
+// Data
 
 let persons = [
   {
@@ -26,6 +30,8 @@ let persons = [
   },
 ];
 
+// GET
+
 app.get("/api/persons", (request, response) => {
   response.json(persons);
 });
@@ -47,6 +53,8 @@ app.get("/api/persons/:id", (request, response) => {
   }
 });
 
+// DELETE
+
 app.delete("/api/persons/:id", (request, response) => {
   const id = Number(request.params.id);
   persons = persons.filter((person) => person.id !== id);
@@ -54,30 +62,39 @@ app.delete("/api/persons/:id", (request, response) => {
   response.status(204).end();
 });
 
-const generateId = () => {
-  const maxId = persons.length > 0 ? Math.max(...persons.map((p) => p.id)) : 0;
-  return maxId + 1;
-};
+function generateId(max) {
+  return Math.floor(Math.random() * max);
+}
+
+// POST
 
 app.post("/api/persons", (request, response) => {
   const body = request.body;
 
-  if (!body.content) {
+  if (!body.name || !body.number) {
     return response.status(400).json({
-      error: "content missing",
+      error: "information missing",
+    });
+  }
+
+  if (persons.find((person) => person.name === body.name)) {
+    return response.status(400).json({
+      error: "name already exists",
     });
   }
 
   const person = {
-    content: body.content,
-    important: body.important || false,
-    id: generateId(),
+    id: generateId(1000),
+    name: body.name,
+    number: body.number || "not given",
   };
 
   persons = persons.concat(person);
 
   response.json(person);
 });
+
+// Port
 
 const PORT = 3001;
 app.listen(PORT, () => {
