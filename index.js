@@ -1,8 +1,24 @@
 const express = require("express");
 const app = express();
+const morgan = require("morgan");
+
+// Morgan
+morgan.token("req-body", function (req) {
+  return JSON.stringify(req.body);
+});
+
+const decideMorgan = function (req, res, next) {
+  if (req.method === "POST") {
+    return morgan(
+      ":method :url :status :res[content-length] - :response-time ms :req-body"
+    )(req, res, next);
+  }
+  return morgan("tiny")(req, res, next);
+};
 
 // Middleware
 app.use(express.json());
+app.use(decideMorgan);
 
 // Data
 let persons = [
