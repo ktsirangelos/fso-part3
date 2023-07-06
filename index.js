@@ -2,11 +2,9 @@ const express = require("express");
 const app = express();
 
 // Middleware
-
 app.use(express.json());
 
 // Data
-
 let persons = [
   {
     id: 1,
@@ -31,7 +29,6 @@ let persons = [
 ];
 
 // GET
-
 app.get("/api/persons", (request, response) => {
   response.json(persons);
 });
@@ -54,7 +51,6 @@ app.get("/api/persons/:id", (request, response) => {
 });
 
 // DELETE
-
 app.delete("/api/persons/:id", (request, response) => {
   const id = Number(request.params.id);
   persons = persons.filter((person) => person.id !== id);
@@ -67,7 +63,6 @@ function generateId(max) {
 }
 
 // POST
-
 app.post("/api/persons", (request, response) => {
   const body = request.body;
 
@@ -95,7 +90,6 @@ app.post("/api/persons", (request, response) => {
 });
 
 // Port
-
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
