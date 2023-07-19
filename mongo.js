@@ -25,8 +25,6 @@ const person = new Person({
   number: `${number}`,
 });
 
-// [1] command [2] file [3] password [4] person [5] number
-
 if (process.argv.length === 3) {
   Person.find({}).then((result) => {
     result.forEach((person) => {
