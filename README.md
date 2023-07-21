@@ -1,4 +1,4 @@
-# Full Stack Open - Exercises
+# Full Stack Open - Solutions to Exercises
 
 ## Part3
 
