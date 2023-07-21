@@ -10,12 +10,14 @@
     "build:ui": "rm -rf build && cd ../playground/phonebook/ && npm run build && cp -r build ../../fso-part3",
     "deploy": "fly deploy",
     "deploy:full": "npm run build:ui && npm run deploy",
-    "logs:prod": "fly logs"
+    "logs:prod": "fly logs",
+    "lint": "eslint ."
   },
   "author": "ktsirangelos",
   "license": "ISC",
   "devDependencies": {
     "@flydotio/dockerfile": "^0.2.16",
+    "eslint": "^8.45.0",
     "nodemon": "^2.0.22"
   },
   "dependencies": {
