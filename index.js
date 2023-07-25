@@ -27,6 +27,8 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message })
+  } else if (error.name === 'NotFound') {
+    return response.status(404).json({ error: error.message })
   }
   next(error)
 }
@@ -113,7 +115,11 @@ app.put('/api/persons/:id', (request, response, next) => {
     runValidators: true,
   })
     .then((updatedPerson) => {
-      response.json(updatedPerson)
+      if (updatedPerson) {
+        response.json(updatedPerson)
+      } else {
+        next({ name: 'NotFound', message: 'this person was deleted from the server, please refresh the page' })
+      }
     })
     .catch((error) => next(error))
 })
