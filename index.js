@@ -72,7 +72,7 @@ app.get('/api/persons/:id', (request, response, next) => {
     .catch((error) => next(error))
 })
 
-// POST - Connected to Database
+// POST - Connected to DB
 app.post('/api/persons', (request, response, next) => {
   const body = request.body
 
